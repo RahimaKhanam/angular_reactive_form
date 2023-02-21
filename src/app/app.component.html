@@ -15,13 +15,15 @@
   </div>
   <!-- Form -->
   <form class="form mt-4" [formGroup]="userForm" autocomplete="false" novalidate>
+    <!-- {{userForm.controls | json}} -->
     <div class="row">
+    <!-- {{formValues.value | json}} -->
       <div class="form-group col-md-4 mb-4">
         <label class="label">First Name</label>
         <input type="text" formControlName="firstName" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['firstName'].errors}">
+          [ngClass]="{'is-invalid': submitFlag && formValues['firstName'].errors}" placeholder="Enter First Name">
         <div *ngIf="submitFlag && formValues['firstName'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['firstName'].errors['required']">First Name is
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['firstName'].errors?.['required']">First Name is
             required
           </div>
         </div>
@@ -29,9 +31,9 @@
       <div class="form-group col-md-4 mb-4">
         <label class="label">Last Name</label>
         <input type="text" formControlName="lastName" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['lastName'].errors}">
+          [ngClass]="{'is-invalid': submitFlag && formValues['lastName'].errors}" placeholder="Enter Last Name">
         <div *ngIf="submitFlag && formValues['lastName'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['lastName'].errors['required']">Last Name is
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['lastName'].errors?.['required']">Last Name is
             required
           </div>
         </div>
@@ -39,31 +41,31 @@
       <div class="form-group col-md-4 mb-4">
         <label class="label">Email</label>
         <input type="email" [email]="true" formControlName="email" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['email'].errors}">
+          [ngClass]="{'is-invalid': submitFlag && formValues['email'].errors}" placeholder="Enter Email">
         <div *ngIf="submitFlag && formValues['email'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['email'].errors['required']">Email is required
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['email'].errors?.['required']">Email is required
           </div>
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['email'].errors['email']">Enter a valid email
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['email'].errors?.['email']">Enter a valid email
           </div>
         </div>
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Phone</label>
         <input type="number" formControlName="phone" minlength="10" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['phone'].errors}">
+          [ngClass]="{'is-invalid': submitFlag && formValues['phone'].errors}" placeholder="Enter Phone Number">
         <div *ngIf="submitFlag && formValues['phone'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['phone'].errors['required']">Phone is required
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['phone'].errors?.['required']">Phone is required
           </div>
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['phone'].errors['pattern']">Phone is invalid
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['phone'].errors?.['pattern']">Phone is invalid
           </div>
         </div>
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Company</label>
         <input type="text" formControlName="company" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['company'].errors}">
+          [ngClass]="{'is-invalid': submitFlag && formValues['company'].errors}" placeholder="Enter Campany Name">
         <div *ngIf="submitFlag && formValues['company'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['company'].errors['required']">Company is
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['company'].errors?.['required']">Company is
             required
           </div>
         </div>
@@ -71,15 +73,17 @@
       <div class="form-group col-md-4 mb-4">
         <label class="label">Gender</label>
         <div class="form-check">
-          <input class="form-check-input" id="male" type="radio" value="male" name="gender" formControlName="gender">
+          <input class="form-check-input" id="male" type="radio" value="male" name="gender" formControlName="gender"
+          [ngClass]="{'is-invalid': submitFlag && formValues['gender'].errors}">
           <label class="form-check-label" for="male">Male</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" id="female" type="radio" value="female" name="gender" formControlName="gender">
+          <input class="form-check-input" id="female" type="radio" value="female" name="gender" formControlName="gender"
+          [ngClass]="{'is-invalid': submitFlag && formValues['gender'].errors}">
           <label class="form-check-label" for="female">Female</label>
         </div>
         <div *ngIf="submitFlag && formValues['gender'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['gender'].errors['required']">Gender is required
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['gender'].errors?.['required']">Gender is required
           </div>
         </div>
 
@@ -88,15 +92,15 @@
         <label class="label">DOB</label>
         <input type="date" formControlName="dob" [ngClass]="{'is-invalid': submitFlag && formValues['dob'].errors}" class="form-control">
         <div *ngIf="submitFlag && formValues['dob'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['dob'].errors['required']">DOB is required</div>
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['dob'].errors?.['required']">DOB is required</div>
         </div>
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Password</label>
         <input type="password" (blur)="changeVal2($event.target)" formControlName="password"
-          [ngClass]="{'is-invalid': submitFlag && formValues['password'].errors}" autocomplete="new-password" class="form-control">
+          [ngClass]="{'is-invalid': submitFlag && formValues['password'].errors}" autocomplete="new-password" class="form-control"  placeholder="Enter Password">
         <div *ngIf="submitFlag && formValues['password'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['password'].errors['required']">Password is
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['password'].errors?.['required']">Password is
             required
           </div>
         </div>
@@ -104,12 +108,12 @@
       <div class="form-group col-md-4 mb-4">
         <label class="label">Confirm Fassword</label>
         <input type="password" (input)="changeVal1($event.target)" formControlName="confirmPassword"
-          [ngClass]="{'is-invalid': submitFlag && formValues['confirmPassword'].errors}" class="form-control">
+          [ngClass]="{'is-invalid': submitFlag && formValues['confirmPassword'].errors}" class="form-control"  placeholder="Confirm Password">
         <div *ngIf="submitFlag && formValues['confirmPassword'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['confirmPassword'].errors['required']">Confirm
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['confirmPassword'].errors?.['required']">Confirm
             Password
             is required</div>
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['confirmPassword'].errors['mismatch']">Password
+          <div class="invalid-feedback" *ngIf="submitFlag && formValues['confirmPassword'].errors?.['mismatch']">Password
             and
             Confirm password are not matched</div>
         </div>
@@ -123,9 +127,10 @@
 
 
   <!-- Table -->
-  <div *ngIf="registeredUsers.length > 0">
+  <div *ngIf="enrolledUsers.length > 0">
     <table class="table mt-5">
       <tr>
+        <th>S. No.</th>
         <th>First name</th>
         <th>Last name</th>
         <th>Email</th>
@@ -135,18 +140,19 @@
         <th>Edit</th>
         <th>Delete</th>
       </tr>
-      <tr *ngFor="let user of registeredUsers; let i=index;">
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.phone }}</td>
-        <td>{{ user.company }}</td>
-        <td>{{ user.dob }}</td>
+      <tr *ngFor="let data of enrolledUsers; let i=index;">
+        <td>{{i+1}}</td>
+        <td>{{ data.firstName }}</td>
+        <td>{{ data.lastName }}</td>
+        <td>{{ data.email }}</td>
+        <td>{{ data.phone }}</td>
+        <td>{{ data.company }}</td>
+        <td>{{ data.dob }}</td>
         <td class="icon-div">
-          <button (click)="editUser(user)"><img src="../assets/edit.png" alt="Edit Record" class="icon"></button>
+          <button (click)="editUser(data)"><img src="../assets/edit.png" alt="Edit Record" class="icon"></button>
         </td>
         <td class="icon-div">
-          <button (click)="deleteUser(user)"><img src="../assets/delete.png" alt="Delete Record" class="icon"></button>
+          <button (click)="deleteUser(data)"><img src="../assets/delete.png" alt="Delete Record" class="icon"></button>
         </td>
       </tr>
     </table>

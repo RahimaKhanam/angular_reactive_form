@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,65 +8,68 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class AppComponent {
   title = 'angular-reactive-form';
-  name = 'Reactive form example';
   submitFlag: boolean = false;
   addUserFlag: boolean = true;
   userForm!: FormGroup;
-  registeredUsers: any = [];
-  editedUser: any = {};
+  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
+  enrolledUsers = [
+    {
+      userId: 'USER_2106',
+      firstName: 'Rohit',
+      lastName: 'Kumar',
+      email: 'Rohit@gmail.com',
+      phone: '8898976567',
+      company: 'Amazon',
+      gender: 'male',
+      dob: '1978-06-21',
+      password: 'Rohit@123',
+      confirmPassword: 'Rohit@123'
+    },
+    {
+      userId: 'USER_2804',
+      firstName: 'Shweta',
+      lastName: 'Chauhaan',
+      email: 'shweta@gmail.com',
+      phone: '8976546785',
+      company: 'Google',
+      gender: 'female',
+      dob: '1994-04-28',
+      password: 'Shewata@123',
+      confirmPassword: 'Shewata@123'
+    },
+    {
+      userId: 'USER_1608',
+      firstName: 'Mariyam',
+      lastName: 'Rana',
+      email: 'mar@gmail.com',
+      phone: '9876758768',
+      company: 'Asus',
+      gender: 'female',
+      dob: '1998-08-16',
+      password: 'Rana@123',
+      confirmPassword: 'Rana@123'
+    }
+  ];
+  editUserDetails: any = {};
 
-  constructor(private fb: FormBuilder) {
-    this.registeredUsers = [
-      {
-        id: 'DOB_1403',
-        firstName: 'Akhil',
-        lastName: 'Kumar',
-        email: 'akhil@gmail.com',
-        phone: '9959479459',
-        company: 'BuzzBoard',
-        gender: 'male',
-        dob: '14-03-1991',
-        password: 'Akhil123',
-        confirmPassword: 'Akhil123'
-      },
-      {
-        id: 'DOB_0907',
-        firstName: 'Rahul',
-        lastName: 'Dev',
-        email: 'rahul@gmail.com',
-        phone: '8923193993',
-        company: 'Infosys',
-        gender: 'male',
-        dob: '09-07-1990',
-        password: 'Nikhil123',
-        confirmPassword: 'Nikhil123'
-      },
-      {
-        id: 'DOB_2706',
-        firstName: 'Sampath',
-        lastName: 'Kumar',
-        email: 'sam@gmail.com',
-        phone: '9703037744',
-        company: 'Cognizant',
-        gender: 'male',
-        dob: '27-06-1989',
-        password: 'Sam123',
-        confirmPassword: 'Sam123'
-      }
-    ];
+  constructor() {
   }
 
   ngOnInit() {
-    this.userForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(/[0-9]{10}/g)]],
-      company: ['', Validators.required],
-      gender: ['', Validators.required],
-      dob: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+    this.generateForm();
+  }
+
+  generateForm() {
+    this.userForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      phone: new FormControl('', [Validators.required, Validators.pattern(this.mobNumberPattern)]),
+      company: new FormControl('', Validators.required),
+      gender: new FormControl('', Validators.required),
+      dob: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      confirmPassword: new FormControl('', Validators.required)
     });
   }
 
@@ -76,29 +79,29 @@ export class AppComponent {
 
   addUser() {
     this.addUserFlag = true;
-    this.editedUser = {};
+    this.editUserDetails = {};
     this.submitFlag = false;
     this.userForm.reset();
   }
 
   submitForm() {
+    console.log("bshgw", this.formValues, this.formValues['firstName'].errors?.['required']);
     this.submitFlag = true;
     if (this.userForm.invalid) {
       return;
     }
     if (this.addUserFlag) {
-      let newUser: any = this.userForm.value;
-      let dob_pass = this.userForm.value.dob.split('-');
-      let newId = `DOB_${dob_pass[2]}${dob_pass[1]}`;
-      console.log(newId);
-      newUser.id = newId;
-      this.registeredUsers.push(newUser);
-    } else if (this.editedUser) {
-      let userIndex = this.registeredUsers.findIndex(
-        (        item: { id: any; }) => item.id === this.editedUser.id
+      let userDetails: any = this.userForm.value;
+      let dob_array = this.userForm.value.dob.split('-');
+      let newId = `USER_${dob_array[2]}${dob_array[1]}`;
+      userDetails.userId = newId;
+      this.enrolledUsers.push(userDetails);
+    } else if (this.editUserDetails) {
+      let userIndex = this.enrolledUsers.findIndex(
+        (item: { userId: any; }) => item.userId === this.editUserDetails.userId
       );
       if (userIndex != -1) {
-        this.registeredUsers[userIndex] = this.userForm.value;
+        this.enrolledUsers[userIndex] = this.userForm.value;
       }
     }
     this.addUserFlag = true;
@@ -106,26 +109,25 @@ export class AppComponent {
     this.userForm.reset();
   }
 
-  editUser(editUser: any) {
+  editUser(data: any) {
     this.addUserFlag = false;
-    console.log(editUser);
-    this.editedUser = editUser;
-    this.userForm.patchValue({
-      firstName: editUser.firstName,
-      lastName: editUser.lastName,
-      email: editUser.email,
-      phone: editUser.phone,
-      company: editUser.company,
-      gender: editUser.gender,
-      dob: editUser.dob,
-      password: editUser.password,
-      confirmPassword: editUser.confirmPassword
+    this.editUserDetails = data;
+    this.userForm.setValue({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      company: data.company,
+      gender: data.gender,
+      dob: data.dob,
+      password: data.password,
+      confirmPassword: data.confirmPassword
     });
   }
 
-  deleteUser(user :any) {
-    this.registeredUsers = this.registeredUsers.filter(
-      (      item: { id: any; }) => item.id != user.id
+  deleteUser(data: any) {
+    this.enrolledUsers = this.enrolledUsers.filter(
+      (item: { userId: any; }) => item.userId != data.userId
     );
     this.addUserFlag = true;
     this.userForm.reset();
@@ -134,14 +136,14 @@ export class AppComponent {
   cancelForm() {
     this.addUserFlag = true;
     this.userForm.reset();
-    this.editedUser = {};
+    this.editUserDetails = {};
   }
 
   changeVal1(eve: any) {
     console.log(eve);
   }
 
-  changeVal2(eve:any) {
+  changeVal2(eve: any) {
     console.log(eve);
   }
 }
