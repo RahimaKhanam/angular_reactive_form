@@ -15,117 +15,69 @@
   </div>
   <!-- Form -->
   <form class="form mt-4" [formGroup]="userForm" autocomplete="false" novalidate>
-    <!-- {{userForm.controls | json}} -->
     <div class="row">
-    <!-- {{formValues.value | json}} -->
       <div class="form-group col-md-4 mb-4">
         <label class="label">First Name</label>
         <input type="text" formControlName="firstName" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['firstName'].errors}" placeholder="Enter First Name">
-        <div *ngIf="submitFlag && formValues['firstName'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['firstName'].errors?.['required']">First Name is
-            required
-          </div>
-        </div>
+          [ngClass]="{'is-invalid': formValues['firstName'].touched && formValues['firstName'].errors}" placeholder="Enter First Name">
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Last Name</label>
         <input type="text" formControlName="lastName" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['lastName'].errors}" placeholder="Enter Last Name">
-        <div *ngIf="submitFlag && formValues['lastName'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['lastName'].errors?.['required']">Last Name is
-            required
-          </div>
-        </div>
+          [ngClass]="{'is-invalid': formValues['lastName'].touched && formValues['lastName'].errors}" placeholder="Enter Last Name">
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Email</label>
-        <input type="email" [email]="true" formControlName="email" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['email'].errors}" placeholder="Enter Email">
-        <div *ngIf="submitFlag && formValues['email'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['email'].errors?.['required']">Email is required
-          </div>
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['email'].errors?.['email']">Enter a valid email
-          </div>
-        </div>
+        <input type="email" formControlName="email" class="form-control"
+          [ngClass]="{'is-invalid': formValues['email'].touched && formValues['email'].errors}" placeholder="Enter Email">
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Phone</label>
         <input type="number" formControlName="phone" minlength="10" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['phone'].errors}" placeholder="Enter Phone Number">
-        <div *ngIf="submitFlag && formValues['phone'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['phone'].errors?.['required']">Phone is required
-          </div>
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['phone'].errors?.['pattern']">Phone is invalid
-          </div>
-        </div>
+          [ngClass]="{'is-invalid': formValues['phone'].touched && formValues['phone'].errors}" placeholder="Enter Phone Number">
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Company</label>
         <input type="text" formControlName="company" class="form-control"
-          [ngClass]="{'is-invalid': submitFlag && formValues['company'].errors}" placeholder="Enter Campany Name">
-        <div *ngIf="submitFlag && formValues['company'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['company'].errors?.['required']">Company is
-            required
-          </div>
-        </div>
+          [ngClass]="{'is-invalid': formValues['company'].touched && formValues['company'].errors}" placeholder="Enter Campany Name">
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Gender</label>
         <div class="form-check">
           <input class="form-check-input" id="male" type="radio" value="male" name="gender" formControlName="gender"
-          [ngClass]="{'is-invalid': submitFlag && formValues['gender'].errors}">
+            [ngClass]="{'is-invalid': formValues['gender'].touched && formValues['gender'].errors}">
           <label class="form-check-label" for="male">Male</label>
         </div>
         <div class="form-check">
           <input class="form-check-input" id="female" type="radio" value="female" name="gender" formControlName="gender"
-          [ngClass]="{'is-invalid': submitFlag && formValues['gender'].errors}">
+            [ngClass]="{'is-invalid': formValues['gender'].touched && formValues['gender'].errors}">
           <label class="form-check-label" for="female">Female</label>
         </div>
-        <div *ngIf="submitFlag && formValues['gender'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['gender'].errors?.['required']">Gender is required
-          </div>
-        </div>
-
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">DOB</label>
-        <input type="date" formControlName="dob" [ngClass]="{'is-invalid': submitFlag && formValues['dob'].errors}" class="form-control">
-        <div *ngIf="submitFlag && formValues['dob'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['dob'].errors?.['required']">DOB is required</div>
-        </div>
+        <input type="date" formControlName="dob" [ngClass]="{'is-invalid': formValues['dob'].touched && formValues['dob'].errors}"
+          class="form-control">
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Password</label>
-        <input type="password" (blur)="changeVal2($event.target)" formControlName="password"
-          [ngClass]="{'is-invalid': submitFlag && formValues['password'].errors}" autocomplete="new-password" class="form-control"  placeholder="Enter Password">
-        <div *ngIf="submitFlag && formValues['password'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['password'].errors?.['required']">Password is
-            required
-          </div>
-        </div>
+        <input type="password" formControlName="password"
+          [ngClass]="{'is-invalid': formValues['password'].touched && formValues['password'].errors}" autocomplete="new-password"
+          class="form-control" placeholder="Enter Password">
       </div>
       <div class="form-group col-md-4 mb-4">
         <label class="label">Confirm Fassword</label>
-        <input type="password" (input)="changeVal1($event.target)" formControlName="confirmPassword"
-          [ngClass]="{'is-invalid': submitFlag && formValues['confirmPassword'].errors}" class="form-control"  placeholder="Confirm Password">
-        <div *ngIf="submitFlag && formValues['confirmPassword'].errors">
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['confirmPassword'].errors?.['required']">Confirm
-            Password
-            is required</div>
-          <div class="invalid-feedback" *ngIf="submitFlag && formValues['confirmPassword'].errors?.['mismatch']">Password
-            and
-            Confirm password are not matched</div>
-        </div>
+        <input type="password" formControlName="confirmPassword"
+          [ngClass]="{'is-invalid': formValues['confirmPassword'].touched && (formValues['confirmPassword'].errors || userForm.errors?.['mismatch'])}"
+          class="form-control" placeholder="Confirm Password">
       </div>
     </div>
     <div class="text-center">
-      <button class="btn btn-primary" type="submit" (click)="submitForm()">{{addUserFlag ? 'Register' : 'Update'}}</button> &nbsp;&nbsp;&nbsp;
+      <button class="btn btn-primary" type="submit" (click)="submitForm()" [disabled]="!userForm.valid">
+        {{addUserFlag ? 'Save' : 'Update'}}</button> &nbsp;&nbsp;&nbsp;
       <button class="btn btn-danger" type="button" (click)="cancelForm()">Cancel</button>
     </div>
   </form>
-
-
   <!-- Table -->
   <div *ngIf="enrolledUsers.length > 0">
     <table class="table mt-5">

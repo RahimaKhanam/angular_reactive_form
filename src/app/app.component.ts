@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { passwordMatchingValidatior } from './password.validator';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent {
   addUserFlag: boolean = true;
   userForm!: FormGroup;
   mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
+  emailPattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$";
   enrolledUsers = [
     {
       userId: 'USER_2106',
@@ -63,14 +65,14 @@ export class AppComponent {
     this.userForm = new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.pattern(this.emailPattern)]),
       phone: new FormControl('', [Validators.required, Validators.pattern(this.mobNumberPattern)]),
       company: new FormControl('', Validators.required),
       gender: new FormControl('', Validators.required),
       dob: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', [Validators.required,  Validators.minLength(8)]),
       confirmPassword: new FormControl('', Validators.required)
-    });
+    }, { validators: passwordMatchingValidatior });
   }
 
   get formValues() {
@@ -85,7 +87,6 @@ export class AppComponent {
   }
 
   submitForm() {
-    console.log("bshgw", this.formValues, this.formValues['firstName'].errors?.['required']);
     this.submitFlag = true;
     if (this.userForm.invalid) {
       return;
@@ -137,13 +138,5 @@ export class AppComponent {
     this.addUserFlag = true;
     this.userForm.reset();
     this.editUserDetails = {};
-  }
-
-  changeVal1(eve: any) {
-    console.log(eve);
-  }
-
-  changeVal2(eve: any) {
-    console.log(eve);
   }
 }
