@@ -1,0 +1,33 @@
+.form{
+    .label{
+        font-weight: 500;
+        font-size: 1.1rem;
+        margin-bottom: 2%;
+    }
+}
+table {
+    th {
+        background-color: rgb(164, 214, 255);
+        padding: 15px 5px;
+        text-transform: uppercase;
+    }
+
+    td {
+        padding: 5px;
+    }
+
+    .icon-div {
+        button {
+            border: none;
+        }
+
+        .icon {
+            height: 30px;
+            width: 30px;
+        }
+    }
+
+    .invalid-feedback{
+        color: red;
+    }
+}
